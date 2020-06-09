@@ -2,23 +2,35 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import Post from './components/Post'
+
+const posts = [
+  {
+    likes: 20,
+    description: "The changed description",
+    image: {
+      url: "/uploads/Squash_750bdf0469.jpeg"
+    }
+  },
+  {
+    likes: 33,
+    description: "The second post",
+    image: {
+      url: "/uploads/Squash_750bdf0469.jpeg"
+    }
+  }
+]
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {posts.map(post => (
+        <Post 
+          likes={post.likes}
+          description={post.description}
+          url={post.image && post.image.url}
+        />
+      ))}
     </div>
   );
 }
