@@ -5,6 +5,7 @@ import Nav from './components/Nav'
 
 import Home from './pages/Home'
 import Create from './pages/Create'
+import SinglePost from './pages/SinglePost'
 
 import './App.css';
 
@@ -20,7 +21,8 @@ function App() {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/create" exact component={Create} />
-        </Switch>
+          <Route path="/:id" exact component={SinglePost} />
+         </Switch>
       </BrowserRouter>
     </div>
   )
