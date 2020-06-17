@@ -4,7 +4,7 @@ export const UserContext = createContext(null)
 
 export default ({children}) => {
 
-    const [user, setUser] = useState({jwt: 'asdasdasd'})
+    const [user, setUser] = useState(null)
 
     return (
         <UserContext.Provider value={{user, setUser}}>
