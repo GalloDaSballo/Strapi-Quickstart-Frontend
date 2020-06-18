@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
+import {UserContext} from '../context/UserContext'
 
 export default () => {
 
@@ -8,8 +9,16 @@ export default () => {
 
     console.log("file", file)
 
+    const {user} = useContext(UserContext)
+
     const handleSubmit = async (event) => {
         event.preventDefault()
+
+        if(!user){
+            setError('Please log in first')
+
+            return
+        }
 
         if(!description){
             setError('Please add a description')
@@ -28,6 +37,9 @@ export default () => {
         try{
             const response = await fetch('http://localhost:1337/posts', {
                 method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${user.jwt}`
+                },
                 body: formData
             })
 
