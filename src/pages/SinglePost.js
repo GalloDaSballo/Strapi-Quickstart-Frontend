@@ -79,7 +79,7 @@ export default ({match, history}) => {
                                 url={post.image && post.image.url}
                                 likes={post.likes}
                             />
-                            {user && post.author && post.author.id === user.user.id &&
+                            {user && user.user && post && post.author && post.author.id === user.user.id &&
                                 <>
                                     <button onClick={handleDelete}>Delete this Post</button>
                                     <button onClick={() => setEdit(true)}>Edit this Post</button>
