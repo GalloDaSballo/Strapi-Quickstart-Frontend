@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react'
 import Post from '../components/Post'
 
 import {UserContext} from '../context/UserContext'
+import {LikesContext} from '../context/LikesContext'
 
 export default ({match, history}) => {
 
@@ -11,6 +12,14 @@ export default ({match, history}) => {
     const {user, setUser} = useContext(UserContext)
     console.log("user", user)
     console.log("setUser", setUser)
+
+    const {likesGiven, reloader} = useContext(LikesContext)
+
+    const isPostAlreadyLiked = (() => {
+        return likesGiven && likesGiven.find(like => like.post && like.post.id == id)
+    })()
+
+    console.log("isPostAlreadyLiked", isPostAlreadyLiked)
 
     const [post, setPost] = useState({})
     const [loading, setLoading] = useState(true)
@@ -74,6 +83,7 @@ export default ({match, history}) => {
                 })
             })
             fetchPost()
+            reloader()
         } catch(err){
             console.log("Exception ", err)
         }
@@ -88,6 +98,7 @@ export default ({match, history}) => {
                 }
             })
             fetchPost()
+            reloader()
         } catch(err){
             console.log("Exception ", err)
         }
@@ -114,8 +125,13 @@ export default ({match, history}) => {
 
                             {user &&
                                 <>
-                                    <button onClick={handleLike}>Like</button>
-                                    <button onClick={handleRemoveLike}>Remove Like</button>
+                                    {isPostAlreadyLiked && 
+                                        <button onClick={handleRemoveLike}>Remove Like</button>
+                                    }
+
+                                    {!isPostAlreadyLiked &&
+                                        <button onClick={handleLike}>Like</button>
+                                    }
                                 </>
                             }
 

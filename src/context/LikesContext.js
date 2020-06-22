@@ -10,7 +10,7 @@ export default ({children}) => {
     const [likesGiven, setLikesGiven] = useState([])
     const [likesReceived, setLikesReceived] = useState([])
 
-    useEffect(() => {
+    const reloader = () => {
         if(user){
             const loadLikesGiven = async () => {
                 const response = await fetch(`http://localhost:1337/likes/given?user=${user.user.id}`, {
@@ -34,13 +34,17 @@ export default ({children}) => {
             }
             loadLikesReceived()
         }
+    }
+
+    useEffect(() => {
+        reloader()
     }, [user])
 
     console.log("likesGiven", likesGiven)
     console.log("likesReceived", likesReceived)
 
     return (
-        <LikesContext.Provider value={{likesGiven, likesReceived}}>
+        <LikesContext.Provider value={{likesGiven, likesReceived, reloader}}>
             {children}
         </LikesContext.Provider>
     )
